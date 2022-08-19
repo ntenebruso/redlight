@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/rubik": "^4.5.11",
     "date-fns": "^2.29.1",
     "hls.js": "^1.2.1",
     "next": "12.2.5",
