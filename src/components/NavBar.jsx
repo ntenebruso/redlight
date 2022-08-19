@@ -2,7 +2,7 @@ import { FiSun } from "react-icons/fi";
 
 export default function NavBar() {
     return (
-        <div className="bg-zinc-800 h-12 p-4 text-xl flex justify-between items-center">
+        <div className="bg-neutral-800 h-12 p-4 text-xl flex justify-between items-center sticky top-0 w-full shadow-md z-10">
             <h1>
                 <span className="text-red-400">red</span>light
             </h1>

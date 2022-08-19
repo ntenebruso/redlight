@@ -3,5 +3,21 @@
 @tailwind utilities;
 
 body {
-    @apply bg-zinc-900 text-gray-200;
+    @apply bg-[#111111] text-gray-200;
+}
+
+.post-body .md :not(:first-child) {
+    @apply mt-4;
+}
+
+.post-body .md h1 {
+    @apply text-2xl font-bold;
+}
+
+.post-body .md a {
+    @apply text-red-400 hover:underline;
+}
+
+.post-body.compact {
+    mask-image: linear-gradient(rgba(0, 0, 0, 1), transparent);
 }

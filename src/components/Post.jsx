@@ -4,7 +4,7 @@ import Preview from "./Preview";
 
 export default function Post({ post, compact = false }) {
     return (
-        <div className="mb-4 p-4 rounded-md bg-zinc-800 flex">
+        <div className="mb-4 p-4 rounded-md bg-neutral-900 hover:bg-neutral-800 border-zinc-600 border-[1px] flex">
             <span className="inline-block mr-4">
                 {new Intl.NumberFormat("en-US", {
                     notation: "compact",
@@ -33,7 +33,7 @@ export default function Post({ post, compact = false }) {
                     </div>
                 </div>
                 <div className="flex w-full">
-                    <h2 className="font-bold text-2xl leading-tight flex-1">
+                    <h2 className="font-medium text-xl leading-tight flex-1">
                         {post.link_flair_text && (
                             <span
                                 style={{
@@ -48,7 +48,20 @@ export default function Post({ post, compact = false }) {
                                         : "text-black"
                                 } inline-block rounded-md px-2 py-1 mr-2 text-xs align-middle`}
                             >
-                                {post.link_flair_text}
+                                {post.link_flair_type == "richtext"
+                                    ? post.link_flair_richtext.map(
+                                          (item, index) =>
+                                              item.e == "emoji" ? (
+                                                  <img
+                                                      src={item.u}
+                                                      className="inline w-4 h-4"
+                                                  />
+                                              ) : (
+                                                  item.e == "text" && item.t
+                                              )
+                                      )
+                                    : post.link_flair_type == "text" &&
+                                      post.link_flair_text}
                             </span>
                         )}
                         {post.title}
