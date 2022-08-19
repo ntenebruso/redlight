@@ -2,6 +2,7 @@ import Body from "./Body";
 import PostImages from "./Image";
 import Video from "./Video";
 import Gallery from "./Gallery";
+import Embed from "./Embed";
 import { useState, useEffect } from "react";
 
 export default function Preview({
@@ -34,11 +35,25 @@ export default function Preview({
                     video: media.reddit_video,
                 },
             };
-        } else if (postHint == "image") {
+        } else if (preview && preview.reddit_video_preview) {
+            Preview = {
+                component: Video,
+                props: {
+                    video: preview.reddit_video_preview,
+                },
+            };
+        } else if (preview && preview.images && preview.enabled) {
             Preview = {
                 component: PostImages,
                 props: {
                     images: preview.images,
+                },
+            };
+        } else if (media && media.oembed) {
+            Preview = {
+                component: Embed,
+                props: {
+                    html: media.oembed.html,
                 },
             };
         } else if (galleryData) {
