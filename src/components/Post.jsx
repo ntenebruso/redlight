@@ -33,39 +33,53 @@ export default function Post({ post, compact = false }) {
                     </div>
                 </div>
                 <div className="flex w-full">
-                    <h2 className="font-medium text-xl leading-tight flex-1">
-                        {post.link_flair_text && (
-                            <span
-                                style={{
-                                    background:
-                                        post.link_flair_background_color == ""
-                                            ? "rgb(248 113 113)"
-                                            : `${post.link_flair_background_color}`,
-                                }}
-                                className={`${
-                                    post.link_flair_text_color == "light"
-                                        ? "text-white"
-                                        : "text-black"
-                                } inline-block rounded-md px-2 py-1 mr-2 text-xs align-middle`}
+                    <div className="flex-1">
+                        <h2 className="font-medium text-xl leading-tight">
+                            {post.link_flair_text && (
+                                <span
+                                    style={{
+                                        background:
+                                            post.link_flair_background_color ==
+                                                null ||
+                                            post.link_flair_background_color ==
+                                                ""
+                                                ? "rgb(248 113 113)"
+                                                : `${post.link_flair_background_color}`,
+                                    }}
+                                    className={`${
+                                        post.link_flair_text_color == "light"
+                                            ? "text-white"
+                                            : "text-black"
+                                    } inline-block rounded-md px-2 py-1 mr-2 text-xs align-middle`}
+                                >
+                                    {post.link_flair_type == "richtext"
+                                        ? post.link_flair_richtext.map(
+                                              (item, index) =>
+                                                  item.e == "emoji" ? (
+                                                      <img
+                                                          src={item.u}
+                                                          className="inline w-4 h-4"
+                                                      />
+                                                  ) : (
+                                                      item.e == "text" && item.t
+                                                  )
+                                          )
+                                        : post.link_flair_type == "text" &&
+                                          post.link_flair_text}
+                                </span>
+                            )}
+                            {post.title}
+                        </h2>
+                        {post.post_hint == "link" && (
+                            <a
+                                className="inline-block mt-1 text-neutral-500 hover:text-gray-200 hover:underline"
+                                href={post.url}
+                                target="_blank"
                             >
-                                {post.link_flair_type == "richtext"
-                                    ? post.link_flair_richtext.map(
-                                          (item, index) =>
-                                              item.e == "emoji" ? (
-                                                  <img
-                                                      src={item.u}
-                                                      className="inline w-4 h-4"
-                                                  />
-                                              ) : (
-                                                  item.e == "text" && item.t
-                                              )
-                                      )
-                                    : post.link_flair_type == "text" &&
-                                      post.link_flair_text}
-                            </span>
+                                {post.domain}
+                            </a>
                         )}
-                        {post.title}
-                    </h2>
+                    </div>
                     {post.post_hint == "link" && (
                         <a
                             href={post.url}
@@ -96,6 +110,14 @@ export default function Post({ post, compact = false }) {
                     galleryData={post.gallery_data}
                     mediaMetadata={post.media_metadata}
                 />
+                <p className="mt-4">
+                    <a
+                        className="text-neutral-500 hover:text-gray-200 hover:underline"
+                        href="#"
+                    >
+                        {post.num_comments} comments
+                    </a>
+                </p>
             </div>
         </div>
     );
