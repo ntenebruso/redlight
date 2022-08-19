@@ -1,5 +1,6 @@
 import { formatDistanceToNow, fromUnixTime } from "date-fns";
 import { FiLink } from "react-icons/fi";
+import Preview from "./Preview";
 
 export default function Post({ post, compact = false }) {
     return (
@@ -72,25 +73,16 @@ export default function Post({ post, compact = false }) {
                         </a>
                     )}
                 </div>
-                <div>
-                    {post.post_hint == "image" &&
-                        post.preview.images.map((image, index) => (
-                            <img
-                                key={index}
-                                src={image.source.url}
-                                className="max-h-[512px] mt-4 mx-auto"
-                            />
-                        ))}
-                    {post.is_self && (
-                        <div
-                            style={{ maxHeight: compact ? "300px" : "auto" }}
-                            className="overflow-hidden"
-                            dangerouslySetInnerHTML={{
-                                __html: post.selftext_html,
-                            }}
-                        />
-                    )}
-                </div>
+                <Preview
+                    compact={compact}
+                    html={post.selftext_html}
+                    isSelf={post.is_self}
+                    media={post.media}
+                    postHint={post.post_hint}
+                    preview={post.preview}
+                    galleryData={post.gallery_data}
+                    mediaMetadata={post.media_metadata}
+                />
             </div>
         </div>
     );
