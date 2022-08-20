@@ -46,7 +46,10 @@ export default function Gallery({ galleryData, mediaMetadata }) {
                     ref={slidesEl}
                 >
                     {galleryData.items.map((item, index) => (
-                        <div className="h-full w-full block absolute left-0 transition-all">
+                        <div
+                            className="h-full w-full block absolute left-0 transition-all"
+                            key={index}
+                        >
                             <img
                                 className="h-full mx-auto"
                                 src={mediaMetadata[item.media_id].s.u}

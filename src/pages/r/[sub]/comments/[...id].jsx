@@ -27,11 +27,42 @@ export default function PostPage() {
                 {loading ? (
                     <p>loading...</p>
                 ) : (
-                    <Post
-                        className="mt-4"
-                        post={data.post.data}
-                        inPost={true}
-                    />
+                    <>
+                        <Post
+                            className="mt-4"
+                            post={data.post.data}
+                            inPost={true}
+                        />
+                        <div className="mt-4">
+                            {data.comments.map((comment, index) => {
+                                comment = comment.data;
+                                return (
+                                    <div className="flex mb-9">
+                                        <div className="mr-4 w-12 text-center">
+                                            <span className="bg-neutral-600 inline-block p-2 w-full rounded-md">
+                                                {new Intl.NumberFormat(
+                                                    "en-US",
+                                                    {
+                                                        notation: "compact",
+                                                        compactDisplay: "short",
+                                                    }
+                                                ).format(comment.score)}
+                                            </span>
+                                        </div>
+                                        <div className="flex-1">
+                                            <p>u/{comment.author}</p>
+                                            <div
+                                                className="post-body mt-2"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: comment.body_html,
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </>
                 )}
             </div>
         </Layout>

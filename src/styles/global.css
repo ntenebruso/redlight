@@ -18,6 +18,25 @@ body {
     @apply text-red-400 hover:underline;
 }
 
+.post-body .md .md-spoiler-text {
+    @apply relative;
+}
+
+.post-body .md .md-spoiler-text::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    @apply bg-neutral-600;
+}
+
+.post-body .md .md-spoiler-text:hover::after {
+    display: none;
+}
+
 .post-body.compact {
     mask-image: linear-gradient(rgba(0, 0, 0, 1), transparent);
 }
