@@ -1,10 +1,19 @@
+import Link from "next/link";
 import { formatDistanceToNow, fromUnixTime } from "date-fns";
 import { FiLink } from "react-icons/fi";
 import Preview from "./Preview";
 
-export default function Post({ post, compact = false }) {
+export default function Post({
+    post,
+    compact = false,
+    inPost = false,
+    ...props
+}) {
     return (
-        <div className="mb-4 p-4 rounded-md bg-neutral-900 hover:bg-neutral-800 border-zinc-600 border-[1px] flex">
+        <div
+            {...props}
+            className={`mb-4 p-4 rounded-md bg-neutral-900 hover:bg-neutral-800 border-zinc-600 border-[1px] flex ${props.className}`}
+        >
             <span className="inline-block mr-4">
                 {new Intl.NumberFormat("en-US", {
                     notation: "compact",
@@ -68,7 +77,15 @@ export default function Post({ post, compact = false }) {
                                           post.link_flair_text}
                                 </span>
                             )}
-                            {post.title}
+                            {inPost ? (
+                                post.title
+                            ) : (
+                                <Link href={post.permalink}>
+                                    <a className="hover:underline">
+                                        {post.title}
+                                    </a>
+                                </Link>
+                            )}
                         </h2>
                         {post.post_hint == "link" && (
                             <a
