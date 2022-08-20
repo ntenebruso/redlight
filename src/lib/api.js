@@ -20,7 +20,7 @@ export async function fetchPostsHot(subreddit) {
 export async function fetchPost(subreddit, id) {
     let endpoint;
     if (!subreddit || !id) return;
-    endpoint = `${url}/r/${subreddit}/comments/${id}.json${params}`;
+    endpoint = `${url}/r/${subreddit}/comments/${id}.json${params}&depth=5`;
     const response = await fetch(endpoint);
     const jsonResponse = await response.json();
 

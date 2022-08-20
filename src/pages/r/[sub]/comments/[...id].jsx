@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { fetchPost } from "../../../../lib/api";
 import Layout from "../../../../components/Layout";
 import Post from "../../../../components/Post";
+import Comment from "../../../../components/Comment";
 
 export default function PostPage() {
     const router = useRouter();
@@ -35,30 +36,11 @@ export default function PostPage() {
                         />
                         <div className="mt-4">
                             {data.comments.map((comment, index) => {
-                                comment = comment.data;
                                 return (
-                                    <div className="flex mb-9">
-                                        <div className="mr-4 w-12 text-center">
-                                            <span className="bg-neutral-600 inline-block p-2 w-full rounded-md">
-                                                {new Intl.NumberFormat(
-                                                    "en-US",
-                                                    {
-                                                        notation: "compact",
-                                                        compactDisplay: "short",
-                                                    }
-                                                ).format(comment.score)}
-                                            </span>
-                                        </div>
-                                        <div className="flex-1">
-                                            <p>u/{comment.author}</p>
-                                            <div
-                                                className="post-body mt-2"
-                                                dangerouslySetInnerHTML={{
-                                                    __html: comment.body_html,
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
+                                    <Comment
+                                        comment={comment.data}
+                                        key={index}
+                                    />
                                 );
                             })}
                         </div>

@@ -6,6 +6,10 @@ body {
     @apply bg-[#111111] text-gray-200;
 }
 
+.btn {
+    @apply bg-neutral-600 inline-block px-2 py-1 rounded-md hover:bg-neutral-500;
+}
+
 .post-body .md :not(:first-child) {
     @apply mt-4;
 }
