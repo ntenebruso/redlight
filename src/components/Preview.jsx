@@ -3,6 +3,7 @@ import PostImages from "./Image";
 import Video from "./Video";
 import Gallery from "./Gallery";
 import Embed from "./Embed";
+import Tweet from "./Tweet";
 import { useState, useEffect } from "react";
 
 export default function Preview({
@@ -50,12 +51,23 @@ export default function Preview({
                 },
             };
         } else if (media && media.oembed) {
-            Preview = {
-                component: Embed,
-                props: {
-                    html: media.oembed.html,
-                },
-            };
+            if (media.type == "twitter.com") {
+                Preview = {
+                    component: Tweet,
+                    props: {
+                        id: media.oembed.url.match(
+                            /https:\/\/twitter.com\/.*\/status\/([0-9]*)/
+                        )[1],
+                    },
+                };
+            } else {
+                Preview = {
+                    component: Embed,
+                    props: {
+                        html: media.oembed.html,
+                    },
+                };
+            }
         } else if (galleryData) {
             Preview = {
                 component: Gallery,

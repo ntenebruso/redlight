@@ -97,7 +97,7 @@ export default function Post({
                             </a>
                         )}
                     </div>
-                    {post.post_hint == "link" && (
+                    {post.post_hint == "link" && !post.media && (
                         <a
                             href={post.url}
                             target="_blank"
