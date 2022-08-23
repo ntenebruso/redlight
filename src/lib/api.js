@@ -1,7 +1,11 @@
+import useSWR from "swr";
+import axios from "axios";
 const url = "https://www.reddit.com";
 const params = "?raw_json=1";
 
-export async function fetchPostsHot(subreddit) {
+const fetcher = (url) => axios.get(url).then((res) => res.data);
+
+export function usePostsHot(subreddit) {
     let endpoint;
     if (subreddit) {
         endpoint = `${url}/${subreddit}/hot.json`;
@@ -11,10 +15,17 @@ export async function fetchPostsHot(subreddit) {
 
     endpoint = endpoint.concat(params);
 
-    const response = await fetch(endpoint);
-    const jsonResponse = await response.json();
+    const { data, error } = useSWR(endpoint, fetcher, {
+        revalidateIfStale: false,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false,
+    });
 
-    return jsonResponse.data.children;
+    return {
+        posts: data,
+        isLoading: !data && !error,
+        isError: error,
+    };
 }
 
 export async function fetchPost(subreddit, id) {

@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export default function Comment({ comment }) {
     const [threadHidden, setThreadHidden] = useState(false);
+    const [replies, setReplies] = useState(comment.replies);
 
     return (
         <div className="flex mt-9">
@@ -38,9 +39,9 @@ export default function Comment({ comment }) {
                         __html: comment.body_html,
                     }}
                 />
-                {comment.replies && (
+                {replies && (
                     <div className={threadHidden ? "hidden" : "block"}>
-                        {comment.replies.data.children.map((reply, index) =>
+                        {replies.data.children.map((reply, index) =>
                             reply.kind == "more" ? (
                                 <button className="btn mt-4" key={index}>
                                     load more
