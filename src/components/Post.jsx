@@ -80,7 +80,7 @@ export default function Post({
                             {inPost ? (
                                 post.title
                             ) : (
-                                <Link href={post.permalink}>
+                                <Link href={post.permalink} shallow={true}>
                                     <a className="hover:underline">
                                         {post.title}
                                     </a>
