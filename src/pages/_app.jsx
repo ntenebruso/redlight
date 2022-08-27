@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { SessionProvider } from "next-auth/react";
 
 import "../styles/global.css";
 import "@fontsource/rubik/300.css";
@@ -22,9 +23,11 @@ function MyApp({ Component, pageProps }) {
     }, []);
 
     return (
-        <Layout>
-            <Component {...pageProps} />
-        </Layout>
+        <SessionProvider>
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
+        </SessionProvider>
     );
 }
 

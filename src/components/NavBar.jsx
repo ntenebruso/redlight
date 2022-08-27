@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { useSession, signIn } from "next-auth/react";
 
 export default function NavBar() {
+    const { data: session } = useSession();
+
     return (
         <div className="bg-neutral-800 h-12 p-4 text-xl flex justify-between items-center sticky top-0 w-full shadow-md z-10">
             <h1>
@@ -18,7 +21,13 @@ export default function NavBar() {
                 ></input>
             </div>
             <div>
-                <span>settings</span>
+                {session ? (
+                    <span>{session.user.name}</span>
+                ) : (
+                    <button className="btn text-md" onClick={signIn}>
+                        Log in
+                    </button>
+                )}
             </div>
         </div>
     );
