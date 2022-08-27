@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { fetchPost } from "../../../../lib/api";
 import Post from "../../../../components/Post";
 import Comment from "../../../../components/Comment";
+import Spinner from "../../../../components/Spinner";
 
 export default function PostPage() {
     const router = useRouter();
@@ -24,7 +25,7 @@ export default function PostPage() {
     return (
         <div className="mx-auto max-w-3xl">
             {loading ? (
-                <p>loading...</p>
+                <Spinner />
             ) : (
                 <>
                     <Post
