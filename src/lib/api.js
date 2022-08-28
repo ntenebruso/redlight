@@ -1,42 +1,48 @@
 import useSWR from "swr";
 import axios from "axios";
-const url = "https://www.reddit.com";
-const params = "?raw_json=1";
+import { useSession } from "next-auth/react";
+const REDDIT = "https://www.reddit.com";
+const REDDIT_OAUTH = "https://oauth.reddit.com";
+const params = {
+    raw_json: 1,
+};
 
-const fetcher = (url) => axios.get(url).then((res) => res.data);
+async function authFetch(path, token) {
+    const res = await axios.get(REDDIT_OAUTH + path, {
+        params,
+        headers: {
+            authorization: `bearer ${token}`,
+        },
+    });
+    return res.data;
+}
 
-export function usePostsHot(subreddit) {
-    let endpoint;
-    if (subreddit) {
-        endpoint = `${url}/${subreddit}/hot.json`;
-    } else {
-        endpoint = `${url}/hot.json`;
+async function noAuthFetch(path) {
+    const res = await axios.get(REDDIT + path, {
+        params,
+    });
+    return res.data;
+}
+
+export async function fetchFeed(token) {
+    if (token) {
+        console.log("FETCHING FEED WITH AUTH");
+        return await authFetch("/hot.json", token);
     }
 
-    endpoint = endpoint.concat(params);
-
-    const { data, error } = useSWR(endpoint, fetcher, {
-        revalidateIfStale: false,
-        revalidateOnFocus: false,
-        revalidateOnReconnect: false,
-    });
-
-    return {
-        posts: data,
-        isLoading: !data && !error,
-        isError: error,
-    };
+    console.log("FETCHING FEED WITH NO AUTH");
+    return await noAuthFetch("/hot.json");
 }
 
 export async function fetchPost(subreddit, id) {
-    let endpoint;
     if (!subreddit || !id) return;
-    endpoint = `${url}/r/${subreddit}/comments/${id}.json${params}&depth=5`;
-    const response = await fetch(endpoint);
-    const jsonResponse = await response.json();
+    const response = await axios.get(
+        `${REDDIT}/r/${subreddit}/comments/${id}.json`,
+        { params: { ...params, depth: 5 } }
+    );
 
     return {
-        post: jsonResponse[0].data.children[0],
-        comments: jsonResponse[1].data.children,
+        post: response.data[0].data.children[0],
+        comments: response.data[1].data.children,
     };
 }
