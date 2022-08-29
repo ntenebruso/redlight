@@ -5,8 +5,8 @@ export default function NavBar() {
     const { data: session } = useSession();
 
     return (
-        <div className="bg-neutral-800 h-12 p-4 text-xl flex justify-between items-center sticky top-0 w-full shadow-md z-10">
-            <h1>
+        <div className="bg-neutral-800 max-h-12 px-4 py-2 flex justify-between items-center sticky top-0 w-full shadow-md z-10">
+            <h1 className="text-xl">
                 <Link href="/">
                     <a>
                         <span className="text-red-400">red</span>light
@@ -24,7 +24,10 @@ export default function NavBar() {
                 {session ? (
                     <span>{session.user.name}</span>
                 ) : (
-                    <button className="btn text-md" onClick={signIn}>
+                    <button
+                        className="btn h-10"
+                        onClick={() => signIn("reddit")}
+                    >
                         Log in
                     </button>
                 )}
