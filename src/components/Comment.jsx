@@ -55,7 +55,10 @@ export default function Comment({ comment, ...props }) {
                     <div className={threadHidden ? "hidden" : "block"}>
                         {replies.data.children.map((reply, index) =>
                             reply.kind == "more" ? (
-                                <button className="btn mt-4" key={index}>
+                                <button
+                                    className="btn alternative mt-4"
+                                    key={index}
+                                >
                                     load more
                                 </button>
                             ) : (

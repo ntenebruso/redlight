@@ -21,7 +21,7 @@ export default function PostsModal({ sub, id }) {
     }, []);
 
     function handleClose() {
-        router.push("/");
+        router.push("/", undefined, { scroll: false });
     }
 
     return (

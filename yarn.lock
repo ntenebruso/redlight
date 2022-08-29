@@ -32,10 +32,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@fontsource/rubik@^4.5.11":
-  version "4.5.11"
-  resolved "https://registry.yarnpkg.com/@fontsource/rubik/-/rubik-4.5.11.tgz#e2d06b840ba5c2111b269bea2842f570848af070"
-  integrity sha512-m0/4GKOqJjF9cB4wuLgDhRdRVt35WzqI5n7SgddRjRD+yzsO0eEq/ak0ezgfbR3+f91ydDCek1+RuOVB8dNYwg==
+"@fontsource/public-sans@^4.5.10":
+  version "4.5.10"
+  resolved "https://registry.yarnpkg.com/@fontsource/public-sans/-/public-sans-4.5.10.tgz#024f284d63e1de3e7bf1ee9146a5af15d0ed25e0"
+  integrity sha512-WHqsfQXyjrIy9cQVnsVvnNRIvqB5K9+4OieYSZGRkOhAe7XSR6ghiwjkXVwF6Sc6iGE0YSBpktPymYt2USbHYw==
 
 "@headlessui/react@^1.6.6":
   version "1.6.6"

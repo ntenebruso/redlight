@@ -7,7 +7,11 @@ body {
 }
 
 .btn {
-    @apply bg-neutral-600 inline-block px-2 py-1 rounded-md hover:bg-neutral-500;
+    @apply text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:ring-red-300 rounded-full outline-none px-5 py-2.5;
+}
+
+.btn.alternative {
+    @apply text-neutral-300 hover:text-white bg-neutral-700 hover:bg-neutral-500 focus:ring-neutral-300;
 }
 
 .post-body .md :not(:first-child) {

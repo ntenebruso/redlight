@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { fetchPost } from "../../../../lib/api";
 import Post from "../../../../components/Post";
-import Comment from "../../../../components/Comment";
+import CommentsList from "../../../../components/CommentsList";
 import Spinner from "../../../../components/Spinner";
 
 export default function PostPage() {
@@ -33,12 +33,11 @@ export default function PostPage() {
                         post={data.post.data}
                         inPost={true}
                     />
-                    <div className="mt-4">
-                        {data.comments.map((comment, index) => {
-                            return (
-                                <Comment comment={comment.data} key={index} />
-                            );
-                        })}
+                    <div className="mt-4 p-4 rounded-md bg-neutral-900 border-zinc-600 border-[1px]">
+                        <CommentsList
+                            comments={data.comments}
+                            numComments={data.post.data.num_comments}
+                        />
                     </div>
                 </>
             )}
