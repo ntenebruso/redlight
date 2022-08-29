@@ -68,6 +68,7 @@ export default function Post({
                                                       <img
                                                           src={item.u}
                                                           className="inline w-4 h-4"
+                                                          key={index}
                                                       />
                                                   ) : (
                                                       item.e == "text" && item.t

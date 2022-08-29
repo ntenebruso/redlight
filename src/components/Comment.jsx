@@ -31,6 +31,18 @@ export default function Comment({ comment }) {
             </div>
             <div className="flex-1">
                 <p className="font-bold">u/{comment.author}</p>
+                {comment.total_awards_received > 0 && (
+                    <div>
+                        {comment.all_awardings.map((award, index) => (
+                            <img
+                                src={award.icon_url}
+                                key={index}
+                                title={award.name}
+                                className="inline w-4 h-4 mr-1"
+                            />
+                        ))}
+                    </div>
+                )}
                 <div
                     className={`post-body mt-2 ${
                         threadHidden ? "hidden" : "block"

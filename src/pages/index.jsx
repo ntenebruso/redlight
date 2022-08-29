@@ -5,13 +5,15 @@ import Spinner from "../components/Spinner";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const [posts, setPosts] = useState(null);
 
     useEffect(() => {
-        if (session == undefined) return;
+        if (session === undefined) return;
 
-        fetchFeed(session.accessToken).then((posts) => setPosts(posts));
+        fetchFeed(session && session.accessToken).then((posts) =>
+            setPosts(posts)
+        );
     }, [session]);
 
     return (
