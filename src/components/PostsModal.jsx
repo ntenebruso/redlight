@@ -28,7 +28,7 @@ export default function PostsModal({ sub, id }) {
         <Dialog open={true} onClose={handleClose}>
             <div className="fixed inset-0 bg-black opacity-30" />
             <Dialog.Panel>
-                <div className="fixed inset-0 mt-10 max-w-6xl mx-auto overflow-scroll">
+                <div className="fixed inset-0 mt-10 max-w-6xl mx-auto overflow-y-scroll">
                     <button
                         onClick={handleClose}
                         className="btn fixed top-16 left-10"
