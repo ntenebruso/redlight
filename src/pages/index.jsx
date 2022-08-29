@@ -3,14 +3,17 @@ import { useSession } from "next-auth/react";
 import PostsList from "../components/PostsList";
 import Spinner from "../components/Spinner";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import PostsModal from "../components/PostsModal";
 
 export default function Home() {
     const { data: session, status } = useSession();
     const [posts, setPosts] = useState(null);
+    const router = useRouter();
+    const { sub, id } = router.query;
 
     useEffect(() => {
         if (session === undefined) return;
-
         fetchFeed(session && session.accessToken).then((posts) =>
             setPosts(posts)
         );
@@ -21,8 +24,13 @@ export default function Home() {
             {!posts ? (
                 <Spinner />
             ) : (
-                <PostsList className="mt-9" posts={posts.data.children} />
+                <PostsList
+                    className="mt-9"
+                    posts={posts.data.children}
+                    modal={true}
+                />
             )}
+            {sub && id && <PostsModal sub={sub} id={id} />}
         </div>
     );
 }

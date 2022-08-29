@@ -7,6 +7,7 @@ export default function Post({
     post,
     compact = false,
     inPost = false,
+    modal = false,
     ...props
 }) {
     return (
@@ -81,7 +82,15 @@ export default function Post({
                             {inPost ? (
                                 post.title
                             ) : (
-                                <Link href={post.permalink} shallow={true}>
+                                <Link
+                                    href={
+                                        modal
+                                            ? `/?sub=${post.subreddit}&id=${post.id}`
+                                            : post.permalink
+                                    }
+                                    as={modal ? post.permalink : undefined}
+                                    scroll={false}
+                                >
                                     <a className="hover:underline">
                                         {post.title}
                                     </a>

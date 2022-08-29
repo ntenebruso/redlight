@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@fontsource/rubik": "^4.5.11",
+    "@headlessui/react": "^1.6.6",
     "axios": "^0.27.2",
     "date-fns": "^2.29.1",
     "hls.js": "^1.2.1",

@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-export default function Comment({ comment }) {
+export default function Comment({ comment, ...props }) {
     const [threadHidden, setThreadHidden] = useState(false);
     const [replies, setReplies] = useState(comment.replies);
 
     return (
-        <div className="flex mt-9">
+        <div className={`flex mt-9 ${props.className}`} {...props}>
             <div className="mr-4 w-12 flex flex-col items-center text-center">
                 {threadHidden ? (
                     <button

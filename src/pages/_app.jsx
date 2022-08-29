@@ -15,12 +15,12 @@ import "@fontsource/rubik/900.css";
 function MyApp({ Component, pageProps }) {
     const router = useRouter();
 
-    useEffect(() => {
-        router.beforePopState((state) => {
-            state.options.scroll = false;
-            return true;
-        });
-    }, []);
+    // useEffect(() => {
+    //     router.beforePopState((state) => {
+    //         state.options.scroll = false;
+    //         return true;
+    //     });
+    // }, []);
 
     return (
         <SessionProvider>
