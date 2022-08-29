@@ -1,10 +1,10 @@
-import { fetchFeed } from "../lib/api";
+import { fetchFeed } from "@lib/api";
 import { useSession } from "next-auth/react";
-import PostsList from "../components/PostsList";
-import Spinner from "../components/Spinner";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import PostsModal from "../components/PostsModal";
+import PostsModal from "@components/PostsModal";
+import PostsList from "@components/PostsList";
+import Spinner from "@components/Spinner";
 
 export default function Home() {
     const { data: session, status } = useSession();

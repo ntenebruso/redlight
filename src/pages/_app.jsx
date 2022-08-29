@@ -1,9 +1,8 @@
-import Layout from "../components/Layout";
-import { useEffect } from "react";
+import Layout from "@components/Layout";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
 
-import "../styles/global.css";
+import "@styles/global.css";
 import "@fontsource/public-sans/300.css";
 import "@fontsource/public-sans/300.css";
 import "@fontsource/public-sans/300.css";

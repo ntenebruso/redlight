@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { fetchPost } from "../../../../lib/api";
-import Post from "../../../../components/Post";
-import CommentsList from "../../../../components/CommentsList";
-import Spinner from "../../../../components/Spinner";
+import { fetchPost } from "@lib/api";
+import Post from "@components/Post";
+import CommentsList from "@components/CommentsList";
+import Spinner from "@components/Spinner";
 
 export default function PostPage() {
     const router = useRouter();

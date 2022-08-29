@@ -1,6 +1,4 @@
-import useSWR from "swr";
 import axios from "axios";
-import { useSession } from "next-auth/react";
 const REDDIT = "https://www.reddit.com";
 const REDDIT_OAUTH = "https://oauth.reddit.com";
 const params = {
