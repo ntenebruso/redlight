@@ -1,23 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { fetchMoreReplies } from "@lib/api";
 
 export default function Comment({ comment, ...props }) {
-    if (comment.replies && comment.replies.data) {
-        comment.replies = comment.replies.data.children;
-    }
     const [threadHidden, setThreadHidden] = useState(false);
-    const [replies, setReplies] = useState(comment.replies);
+    const [replies, setReplies] = useState([]);
+    const [moreLoaded, setMoreLoaded] = useState(false);
+    const parentEl = useRef(null);
+
+    useEffect(() => {
+        setReplies(comment.replies?.data?.children);
+    }, []);
 
     function loadMoreReplies(children) {
         fetchMoreReplies(comment.link_id, children).then((replies) => {
-            setReplies(replies);
+            setReplies((r) => [...r, ...replies]);
+            setMoreLoaded(true);
         });
+    }
+
+    function scrollElement() {
+        if (parentEl.current.getBoundingClientRect().top < 0) {
+            // window.scrollTo({
+            //     top: parentEl.current.offsetTop - 55,
+            //     behavior: "smooth",
+            // });
+            parentEl.current.scrollIntoView();
+        }
     }
 
     return (
         <div
             className={`flex mt-9 w-full flex-wrap ${props.className}`}
             {...props}
+            ref={parentEl}
         >
             <div className="mr-4 w-12 flex flex-col items-center text-center">
                 {threadHidden ? (
@@ -37,7 +52,10 @@ export default function Comment({ comment, ...props }) {
                         </span>
                         <div
                             className="h-full w-1 bg-neutral-600 hover:cursor-pointer hover:bg-white"
-                            onClick={() => setThreadHidden(true)}
+                            onClick={() => {
+                                setThreadHidden(true);
+                                scrollElement();
+                            }}
                         />
                     </>
                 )}
@@ -67,7 +85,9 @@ export default function Comment({ comment, ...props }) {
                 {replies && (
                     <div className={threadHidden ? "hidden" : "block"}>
                         {replies.map((reply, index) =>
-                            reply.kind == "more" && reply.data.count > 0 ? (
+                            reply.kind == "more" &&
+                            reply.data.count > 0 &&
+                            !moreLoaded ? (
                                 <button
                                     className="btn alternative mt-4"
                                     key={index}
