@@ -1,5 +1,5 @@
 import axios from "axios";
-const REDDIT = "https://www.reddit.com";
+const REDDIT = "https://api.reddit.com";
 const REDDIT_OAUTH = "https://oauth.reddit.com";
 const params = {
     raw_json: 1,
@@ -20,6 +20,19 @@ async function noAuthFetch(path) {
         params,
     });
     return res.data;
+}
+
+export async function fetchMoreReplies(linkId, children) {
+    const res = await axios.get(REDDIT + "/api/morechildren", {
+        params: {
+            api_type: "json",
+            link_id: linkId,
+            children: children.join(","),
+            ...params,
+        },
+    });
+    console.log(res.data);
+    return res.data.json.data.things;
 }
 
 export async function fetchFeed(token) {

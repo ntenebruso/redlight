@@ -1,8 +1,18 @@
 import { useState } from "react";
+import { fetchMoreReplies } from "@lib/api";
 
 export default function Comment({ comment, ...props }) {
+    if (comment.replies && comment.replies.data) {
+        comment.replies = comment.replies.data.children;
+    }
     const [threadHidden, setThreadHidden] = useState(false);
     const [replies, setReplies] = useState(comment.replies);
+
+    function loadMoreReplies(children) {
+        fetchMoreReplies(comment.link_id, children).then((replies) => {
+            setReplies(replies);
+        });
+    }
 
     return (
         <div
@@ -56,16 +66,21 @@ export default function Comment({ comment, ...props }) {
                 />
                 {replies && (
                     <div className={threadHidden ? "hidden" : "block"}>
-                        {replies.data.children.map((reply, index) =>
-                            reply.kind == "more" ? (
+                        {replies.map((reply, index) =>
+                            reply.kind == "more" && reply.data.count > 0 ? (
                                 <button
                                     className="btn alternative mt-4"
                                     key={index}
+                                    onClick={() =>
+                                        loadMoreReplies(reply.data.children)
+                                    }
                                 >
                                     load more
                                 </button>
                             ) : (
-                                <Comment comment={reply.data} key={index} />
+                                reply.kind !== "more" && (
+                                    <Comment comment={reply.data} key={index} />
+                                )
                             )
                         )}
                     </div>
