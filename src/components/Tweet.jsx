@@ -44,16 +44,21 @@ export default function Tweet({ id }) {
             iframeEl.current.contentDocument.getElementById("tweet");
 
         twitter.ready(function () {
-            twitter.widgets.createTweet(id, container, {
-                theme: "dark",
-                align: "center",
-            });
+            twitter.widgets
+                .createTweet(id, container, {
+                    theme: "dark",
+                    align: "center",
+                })
+                .then(() => {
+                    iframeEl.current.style.height =
+                        container.offsetHeight + "px";
+                });
         });
     }
 
     return (
         <iframe
-            className="w-full h-[235px]"
+            className="w-full"
             srcDoc={srcDoc}
             onLoad={handleLoad}
             ref={iframeEl}
