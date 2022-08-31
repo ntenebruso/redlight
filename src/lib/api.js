@@ -31,17 +31,54 @@ async function noAuthFetch(path) {
     return res.data;
 }
 
-export async function fetchMoreReplies(linkId, children) {
+export async function fetchMoreReplies(linkId, children, id) {
     const res = await axios.get(REDDIT + "/api/morechildren", {
         params: {
             api_type: "json",
             link_id: linkId,
             children: children.join(","),
+            limit_children: false,
+            sort: "top",
             ...params,
         },
     });
-    console.log(res.data);
-    return res.data.json.data.things;
+    console.log(res.data.json.data.things);
+    console.log(fixCommentsFormat(res.data.json.data.things));
+    return fixCommentsFormat(res.data.json.data.things);
+}
+
+function fixCommentsFormat(comments) {
+    if (comments.length > 0) {
+        const ogDepth = comments[0].data.depth;
+        const ids = new Map();
+        comments.forEach((comment) => {
+            ids.set(comment.data.name, comment);
+        });
+
+        comments.forEach((comment) => {
+            const c = ids.get(comment.data.parent_id);
+            if (c && c.data.replies?.data?.children) {
+                c.data.replies.data.children.push(comment);
+            } else if (c) {
+                c.data.replies = {
+                    kind: "Listing",
+                    data: {
+                        children: [comment],
+                    },
+                };
+            }
+            c && ids.set(comment.data.parent_id, c);
+        });
+
+        const fixedComments = [];
+        ids.forEach((comment) => {
+            if (comment.data.depth == ogDepth) {
+                fixedComments.push(comment);
+            }
+        });
+        return fixedComments;
+    }
+    return comments;
 }
 
 export async function fetchFeed() {

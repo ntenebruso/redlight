@@ -15,8 +15,8 @@ export default function Comment({
         setReplies(comment.replies?.data?.children);
     }, []);
 
-    function loadMoreReplies(children) {
-        fetchMoreReplies(comment.link_id, children).then((replies) => {
+    function loadMoreReplies(children, id) {
+        fetchMoreReplies(comment.link_id, children, id).then((replies) => {
             setReplies((r) => [...r, ...replies]);
             setMoreLoaded(true);
         });
@@ -95,7 +95,10 @@ export default function Comment({
                                     className="btn alternative mt-4"
                                     key={index}
                                     onClick={() =>
-                                        loadMoreReplies(reply.data.children)
+                                        loadMoreReplies(
+                                            reply.data.children,
+                                            reply.data.id
+                                        )
                                     }
                                 >
                                     load more
