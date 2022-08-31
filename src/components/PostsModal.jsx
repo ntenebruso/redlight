@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Dialog } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { fetchPost } from "../lib/api";
@@ -9,6 +9,7 @@ import Spinner from "./Spinner";
 export default function PostsModal({ sub, id }) {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState();
+    const scrollContainer = useRef(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -28,7 +29,10 @@ export default function PostsModal({ sub, id }) {
         <Dialog open={true} onClose={handleClose}>
             <div className="fixed inset-0 bg-black opacity-30" />
             <Dialog.Panel>
-                <div className="fixed inset-0 top-12 max-w-6xl mx-auto overflow-y-scroll">
+                <div
+                    className="fixed inset-0 top-12 max-w-6xl mx-auto overflow-y-scroll"
+                    ref={scrollContainer}
+                >
                     <button
                         onClick={handleClose}
                         className="btn fixed top-16 left-10"
@@ -48,6 +52,7 @@ export default function PostsModal({ sub, id }) {
                                 <CommentsList
                                     comments={data.comments}
                                     numComments={data.post.data.num_comments}
+                                    scrollContainer={scrollContainer.current}
                                 />
                             </div>
                         </>

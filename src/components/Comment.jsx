@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { fetchMoreReplies } from "@lib/api";
 
-export default function Comment({ comment, ...props }) {
+export default function Comment({
+    comment,
+    scrollContainer = window,
+    ...props
+}) {
     const [threadHidden, setThreadHidden] = useState(false);
     const [replies, setReplies] = useState([]);
     const [moreLoaded, setMoreLoaded] = useState(false);
@@ -20,11 +24,10 @@ export default function Comment({ comment, ...props }) {
 
     function scrollElement() {
         if (parentEl.current.getBoundingClientRect().top < 0) {
-            // window.scrollTo({
-            //     top: parentEl.current.offsetTop - 55,
-            //     behavior: "smooth",
-            // });
-            parentEl.current.scrollIntoView();
+            scrollContainer.scrollTo({
+                top: parentEl.current.offsetTop - 55,
+                behavior: "smooth",
+            });
         }
     }
 
