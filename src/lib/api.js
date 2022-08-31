@@ -4,6 +4,15 @@ const REDDIT_OAUTH = "https://oauth.reddit.com";
 const params = {
     raw_json: 1,
 };
+import { getSession } from "next-auth/react";
+
+async function getToken() {
+    const session = await getSession();
+    if (session) {
+        return session.accessToken;
+    }
+    return undefined;
+}
 
 async function authFetch(path, token) {
     const res = await axios.get(REDDIT_OAUTH + path, {
@@ -35,7 +44,9 @@ export async function fetchMoreReplies(linkId, children) {
     return res.data.json.data.things;
 }
 
-export async function fetchFeed(token) {
+export async function fetchFeed() {
+    const token = await getToken();
+
     if (token) {
         console.log("FETCHING FEED WITH AUTH");
         return await authFetch("/hot.json", token);
