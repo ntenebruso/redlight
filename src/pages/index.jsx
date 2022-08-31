@@ -12,7 +12,7 @@ export default function Home() {
 
     useEffect(() => {
         fetchFeed().then((posts) => setPosts(posts));
-    });
+    }, []);
 
     return (
         <div className="mx-auto max-w-3xl">
