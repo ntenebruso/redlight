@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { fetchMoreReplies } from "@lib/api";
+import { formatDistanceToNowStrict, fromUnixTime } from "date-fns";
 
 export default function Comment({
     comment,
@@ -64,8 +65,8 @@ export default function Comment({
                 )}
             </div>
             <div className="flex-1">
-                <p className="font-bold">
-                    u/{comment.author}
+                <p>
+                    <span className="font-bold">u/{comment.author}</span>
                     {comment.is_submitter && (
                         <span className="font-semibold text-red-400 ml-2">
                             OP
@@ -76,6 +77,14 @@ export default function Comment({
                             MOD
                         </span>
                     )}
+                    <span className="ml-2 mr-2 text-neutral-400">&bull;</span>
+                    <span>
+                        {comment.created &&
+                            formatDistanceToNowStrict(
+                                fromUnixTime(comment.created)
+                            )}{" "}
+                        ago
+                    </span>
                 </p>
                 {comment.total_awards_received > 0 && (
                     <div>
