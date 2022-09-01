@@ -42,9 +42,8 @@ export async function fetchMoreReplies(linkId, children, id) {
             ...params,
         },
     });
-    console.log(res.data.json.data.things);
-    console.log(fixCommentsFormat(res.data.json.data.things));
-    return fixCommentsFormat(res.data.json.data.things);
+
+    return await fixCommentsFormat(res.data.json.data.things);
 }
 
 function fixCommentsFormat(comments) {
@@ -57,9 +56,12 @@ function fixCommentsFormat(comments) {
 
         comments.forEach((comment) => {
             const c = ids.get(comment.data.parent_id);
-            if (c && c.data.replies?.data?.children) {
+
+            if (c && c.data.replies.data && c.data.replies.data.children) {
+                console.log("comment", comment);
                 c.data.replies.data.children.push(comment);
             } else if (c) {
+                console.log("comment", comment);
                 c.data.replies = {
                     kind: "Listing",
                     data: {

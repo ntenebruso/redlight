@@ -11,7 +11,7 @@ export default function Preview({
     isSelf,
     html,
     media,
-    postHint,
+    nsfw,
     preview,
     galleryData,
     mediaMetadata,
@@ -48,6 +48,7 @@ export default function Preview({
                 component: PostImages,
                 props: {
                     images: preview.images,
+                    nsfw,
                 },
             };
         } else if (media && media.oembed) {

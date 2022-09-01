@@ -64,7 +64,19 @@ export default function Comment({
                 )}
             </div>
             <div className="flex-1">
-                <p className="font-bold">u/{comment.author}</p>
+                <p className="font-bold">
+                    u/{comment.author}
+                    {comment.is_submitter && (
+                        <span className="font-semibold text-red-400 ml-2">
+                            OP
+                        </span>
+                    )}
+                    {comment.distinguished == "moderator" && (
+                        <span className="font-semibold text-green-500 ml-2">
+                            MOD
+                        </span>
+                    )}
+                </p>
                 {comment.total_awards_received > 0 && (
                     <div>
                         {comment.all_awardings.map((award, index) => (

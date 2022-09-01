@@ -136,6 +136,7 @@ export default function Post({
                     preview={post.preview}
                     galleryData={post.gallery_data}
                     mediaMetadata={post.media_metadata}
+                    nsfw={post.over_18}
                 />
                 <p className="mt-4">
                     <a
