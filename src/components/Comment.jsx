@@ -34,7 +34,7 @@ export default function Comment({
 
     return (
         <div
-            className={`flex mt-9 w-full flex-wrap ${props.className}`}
+            className={`flex mt-9 w-full ${props.className}`}
             {...props}
             ref={parentEl}
         >
@@ -64,7 +64,7 @@ export default function Comment({
                     </>
                 )}
             </div>
-            <div className="flex-1">
+            <div className="flex-1 overflow-hidden">
                 <p>
                     <span className="font-bold">u/{comment.author}</span>
                     {comment.is_submitter && (

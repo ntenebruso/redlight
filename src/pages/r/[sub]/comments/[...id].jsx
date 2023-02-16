@@ -33,7 +33,7 @@ export default function PostPage() {
                         post={data.post.data}
                         inPost={true}
                     />
-                    <div className="mt-4 p-4 rounded-md bg-neutral-900 border-zinc-600 border-[1px]">
+                    <div className="mt-4 p-4 rounded-md bg-neutral-900 border-zinc-600 border-[1px] relative">
                         <CommentsList
                             comments={data.comments}
                             numComments={data.post.data.num_comments}
