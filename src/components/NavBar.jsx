@@ -8,9 +8,7 @@ export default function NavBar() {
         <div className="bg-neutral-800 max-h-12 px-4 py-2 flex justify-between items-center sticky top-0 w-full shadow-md z-10">
             <h1 className="text-xl">
                 <Link href="/">
-                    <a>
-                        <span className="text-red-400">red</span>light
-                    </a>
+                    <span className="text-red-400">red</span>light
                 </Link>
             </h1>
             <div>

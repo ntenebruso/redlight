@@ -6,24 +6,37 @@ import PostsList from "@components/PostsList";
 import Spinner from "@components/Spinner";
 
 export default function Home() {
-    const [posts, setPosts] = useState(null);
+    const [posts, setPosts] = useState([]);
     const router = useRouter();
     const { sub, id } = router.query;
 
     useEffect(() => {
-        fetchFeed().then((posts) => setPosts(posts));
+        fetchFeed().then((posts) => {
+            setPosts(posts.data.children);
+        });
     }, []);
+
+    function fetchMorePosts() {
+        const lastPostName = posts[posts.length - 1].data.name;
+        fetchFeed(lastPostName).then((newPosts) =>
+            setPosts([...posts, ...newPosts.data.children])
+        );
+    }
 
     return (
         <div className="mx-auto max-w-3xl">
-            {!posts ? (
+            {!posts.length ? (
                 <Spinner />
             ) : (
-                <PostsList
-                    className="mt-9"
-                    posts={posts.data.children}
-                    modal={true}
-                />
+                <>
+                    <PostsList className="mt-9" posts={posts} modal={true} />
+                    <button
+                        className="btn inline-block mx-auto mb-4"
+                        onClick={fetchMorePosts}
+                    >
+                        Fetch more...
+                    </button>
+                </>
             )}
             {sub && id && <PostsModal sub={sub} id={id} />}
         </div>

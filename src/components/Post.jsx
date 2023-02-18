@@ -90,10 +90,9 @@ export default function Post({
                                     }
                                     as={modal ? post.permalink : undefined}
                                     scroll={false}
+                                    className="hover:underline"
                                 >
-                                    <a className="hover:underline">
-                                        {post.title}
-                                    </a>
+                                    {post.title}
                                 </Link>
                             )}
                         </h2>
