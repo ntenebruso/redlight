@@ -32,21 +32,6 @@ async function authFetch(path, localParams) {
     return res.data;
 }
 
-export async function fetchMoreReplies(linkId, children, id) {
-    const res = await axios.get(REDDIT + "/api/morechildren", {
-        params: {
-            api_type: "json",
-            link_id: linkId,
-            children: children.join(","),
-            limit_children: false,
-            sort: "top",
-            ...params,
-        },
-    });
-
-    return await fixCommentsFormat(res.data.json.data.things);
-}
-
 function fixCommentsFormat(comments) {
     if (comments.length > 0) {
         const ogDepth = comments[0].data.depth;
@@ -99,4 +84,29 @@ export async function fetchPost(subreddit, id) {
         post: response.data[0].data.children[0],
         comments: response.data[1].data.children,
     };
+}
+
+export async function fetchMoreReplies(linkId, children, id) {
+    const res = await axios.get(REDDIT + "/api/morechildren", {
+        params: {
+            api_type: "json",
+            link_id: linkId,
+            children: children.join(","),
+            limit_children: false,
+            sort: "top",
+            ...params,
+        },
+    });
+
+    return await fixCommentsFormat(res.data.json.data.things);
+}
+
+export async function fetchSearchResults(query) {
+    const res = await axios.get(REDDIT + "/search.json", {
+        params: {
+            q: query,
+            ...params,
+        },
+    });
+    return res.data;
 }
