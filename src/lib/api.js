@@ -14,25 +14,20 @@ async function getToken() {
     return undefined;
 }
 
-async function authFetch(path, token, localParams) {
-    const res = await axios.get(REDDIT_OAUTH + path, {
-        params: {
-            ...params,
-            ...localParams,
-        },
-        headers: {
-            authorization: `bearer ${token}`,
-        },
-    });
-    return res.data;
-}
+async function authFetch(path, localParams) {
+    const token = await getToken();
 
-async function noAuthFetch(path, localParams) {
-    const res = await axios.get(REDDIT + path, {
+    const basePath = token ? REDDIT_OAUTH : REDDIT;
+    const headers = token && {
+        authorization: `bearer ${token}`,
+    };
+
+    const res = await axios.get(basePath + path, {
         params: {
             ...params,
             ...localParams,
         },
+        headers,
     });
     return res.data;
 }
@@ -89,16 +84,8 @@ function fixCommentsFormat(comments) {
     return comments;
 }
 
-export async function fetchFeed(last) {
-    const token = await getToken();
-
-    if (token) {
-        console.log("FETCHING FEED WITH AUTH");
-        return await authFetch("/hot.json", token, { after: last });
-    }
-
-    console.log("FETCHING FEED WITH NO AUTH");
-    return await noAuthFetch("/hot.json", { after: last });
+export async function fetchFeed(feed, last) {
+    return await authFetch(`/${feed}.json`, { after: last });
 }
 
 export async function fetchPost(subreddit, id) {
