@@ -2,6 +2,7 @@ import Link from "next/link";
 import { formatDistanceToNow, fromUnixTime } from "date-fns";
 import { FiLink } from "react-icons/fi";
 import Preview from "./Preview";
+import Flair from "./Flair";
 
 export default function Post({
     post,
@@ -24,9 +25,33 @@ export default function Post({
             <div className="flex-1">
                 <div className="mb-3">
                     <p>
+                        {post.link_flair_text && (
+                            <Flair
+                                backgroundColor={
+                                    post.link_flair_background_color
+                                }
+                                textColor={post.link_flair_text_color}
+                                type={post.link_flair_type}
+                                richtext={post.link_flair_richtext}
+                                text={post.link_flair_text}
+                                className="mr-2"
+                            />
+                        )}
                         <span className="font-bold">r/{post.subreddit}</span>{" "}
                         <span className="text-gray-600">&bull;</span> u/
-                        {post.author}{" "}
+                        {post.author}
+                        {post.author_flair_text && (
+                            <Flair
+                                backgroundColor={
+                                    post.author_flair_background_color
+                                }
+                                textColor={post.author_flair_text_color}
+                                type={post.author_flair_type}
+                                richtext={post.author_flair_richtext}
+                                text={post.author_flair_text}
+                                className="ml-2"
+                            />
+                        )}{" "}
                         <span className="text-gray-600">&bull;</span>{" "}
                         {formatDistanceToNow(fromUnixTime(post.created))}
                     </p>
@@ -45,40 +70,6 @@ export default function Post({
                 <div className="flex w-full">
                     <div className="flex-1">
                         <h2 className="font-medium text-xl leading-tight">
-                            {post.link_flair_text && (
-                                <span
-                                    style={{
-                                        background:
-                                            post.link_flair_background_color ==
-                                                null ||
-                                            post.link_flair_background_color ==
-                                                ""
-                                                ? "rgb(248 113 113)"
-                                                : `${post.link_flair_background_color}`,
-                                    }}
-                                    className={`${
-                                        post.link_flair_text_color == "light"
-                                            ? "text-white"
-                                            : "text-black"
-                                    } inline-block rounded-md px-2 py-1 mr-2 text-xs align-middle`}
-                                >
-                                    {post.link_flair_type == "richtext"
-                                        ? post.link_flair_richtext.map(
-                                              (item, index) =>
-                                                  item.e == "emoji" ? (
-                                                      <img
-                                                          src={item.u}
-                                                          className="inline w-4 h-4"
-                                                          key={index}
-                                                      />
-                                                  ) : (
-                                                      item.e == "text" && item.t
-                                                  )
-                                          )
-                                        : post.link_flair_type == "text" &&
-                                          post.link_flair_text}
-                                </span>
-                            )}
                             {inPost ? (
                                 post.title
                             ) : (

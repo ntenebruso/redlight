@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { fetchMoreReplies } from "@lib/api";
 import { formatDistanceToNowStrict, fromUnixTime } from "date-fns";
+import Image from "next/image";
+import Flair from "./Flair";
 
 export default function Comment({
     comment,
@@ -41,7 +43,7 @@ export default function Comment({
             <div className="mr-4 w-12 flex flex-col items-center text-center">
                 {threadHidden ? (
                     <button
-                        className="btn w-7 h-7 leading-none"
+                        className="btn w-7 h-7 leading-none flex items-center justify-center"
                         onClick={() => setThreadHidden(false)}
                     >
                         +
@@ -65,7 +67,7 @@ export default function Comment({
                 )}
             </div>
             <div className="flex-1 overflow-hidden">
-                <p>
+                <p className="flex items-center">
                     <span className="font-bold">u/{comment.author}</span>
                     {comment.is_submitter && (
                         <span className="font-semibold text-red-400 ml-2">
@@ -76,6 +78,18 @@ export default function Comment({
                         <span className="font-semibold text-green-500 ml-2">
                             MOD
                         </span>
+                    )}
+                    {comment.author_flair_text && (
+                        <Flair
+                            backgroundColor={
+                                comment.author_flair_background_color
+                            }
+                            textColor={comment.author_flair_text_color}
+                            type={comment.author_flair_type}
+                            richtext={comment.author_flair_richtext}
+                            text={comment.author_flair_text}
+                            className="ml-2"
+                        />
                     )}
                     <span className="ml-2 mr-2 text-neutral-400">&bull;</span>
                     <span>

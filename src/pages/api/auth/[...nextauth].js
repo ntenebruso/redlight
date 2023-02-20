@@ -56,6 +56,8 @@ export default NextAuth({
                 );
                 const data = await response.json();
                 token.accessToken = data.access_token;
+                token.refreshToken = data.refresh_token;
+                token.expiresAt = data.expires_at * 1000;
                 return token;
             }
         },
