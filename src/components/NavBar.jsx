@@ -25,7 +25,7 @@ export default function NavBar() {
                 <input
                     type="text"
                     placeholder="Search"
-                    className="text-sm outline-none bg-zinc-700 focus:bg-zinc-600 rounded-md p-2"
+                    className="text-sm outline-none bg-neutral-700 focus:bg-neutral-600 rounded-md p-2"
                     defaultValue={query ?? ""}
                     ref={searchInput}
                 ></input>
