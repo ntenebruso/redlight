@@ -10,6 +10,8 @@ export default function Tweet({ id }) {
     }
 
     #tweet {
+        width: 100vw;
+        height: 100vh;
         margin: 0;
         overflow: hidden;
     }
@@ -39,6 +41,12 @@ export default function Tweet({ id }) {
     `;
 
     function handleLoad() {
+        if (
+            !iframeEl.current ||
+            !iframeEl.current.contentWindow.twttr ||
+            !iframeEl.current.contentDocument
+        )
+            return;
         const twitter = iframeEl.current.contentWindow.twttr;
         const container =
             iframeEl.current.contentDocument.getElementById("tweet");
@@ -49,9 +57,10 @@ export default function Tweet({ id }) {
                     theme: "dark",
                     align: "center",
                 })
-                .then(() => {
-                    iframeEl.current.style.height =
-                        container.offsetHeight + "px";
+                .then((el) => {
+                    el.style.marginTop = 0;
+                    el.style.marginBottom = 0;
+                    iframeEl.current.style.height = el.offsetHeight + "px";
                 });
         });
     }
