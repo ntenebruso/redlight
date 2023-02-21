@@ -87,7 +87,7 @@ export default function Post({
                                 </Link>
                             )}
                         </h2>
-                        {post.post_hint == "link" && (
+                        {post.url_overridden_by_dest && (
                             <a
                                 className="inline-block mt-1 text-neutral-500 hover:text-gray-200 hover:underline"
                                 href={post.url}
@@ -97,25 +97,32 @@ export default function Post({
                             </a>
                         )}
                     </div>
-                    {post.post_hint == "link" && !post.media && (
-                        <a
-                            href={post.url}
-                            target="_blank"
-                            className="ml-4 w-28 h-24 bg-zinc-500 flex flex-col items-center justify-center rounded-md text-sm relative overflow-hidden"
-                        >
-                            {post.thumbnail == "default" ? (
-                                <FiLink className="text-2xl flex-1" />
-                            ) : (
-                                <img className="flex-1" src={post.thumbnail} />
-                            )}
-                            <span
-                                className="inline-block text-center w-full bg-black"
-                                style={{ gridArea: "1/1/2/2" }}
+                    {!post.is_self &&
+                        (!post.preview ||
+                            (post.preview && !post.preview.enabled)) &&
+                        !post.media && (
+                            <a
+                                href={post.url}
+                                target="_blank"
+                                className="ml-4 w-28 h-24 bg-zinc-500 flex flex-col items-center justify-center rounded-md text-sm relative overflow-hidden"
                             >
-                                {post.domain}
-                            </span>
-                        </a>
-                    )}
+                                {post.thumbnail == "default" ||
+                                post.thumbnail == "" ? (
+                                    <FiLink className="text-2xl flex-1" />
+                                ) : (
+                                    <img
+                                        className="flex-1"
+                                        src={post.thumbnail}
+                                    />
+                                )}
+                                <span
+                                    className="inline-block text-center w-full bg-black"
+                                    style={{ gridArea: "1/1/2/2" }}
+                                >
+                                    {post.domain}
+                                </span>
+                            </a>
+                        )}
                 </div>
                 <Preview
                     compact={compact}

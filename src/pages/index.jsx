@@ -19,6 +19,7 @@ export default function Home() {
         console.log("fetching...");
         fetchFeed(currentFeed).then((posts) => {
             setPosts(posts.data.children);
+            console.log("full list", posts.data.children);
             setLoading(false);
         });
     }, [currentFeed]);
