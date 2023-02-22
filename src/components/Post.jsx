@@ -37,9 +37,15 @@ export default function Post({
                                 className="mr-2"
                             />
                         )}
-                        <span className="font-bold">r/{post.subreddit}</span>{" "}
-                        <span className="text-gray-600">&bull;</span> u/
-                        {post.author}
+                        <span className="font-bold">r/{post.subreddit}</span>
+                        <span className="text-neutral-400 mx-2">&bull;</span>
+                        <Link
+                            href={`/u/${post.author.toLowerCase()}`}
+                            className="text-red-400"
+                        >
+                            u/
+                            {post.author}
+                        </Link>
                         {post.author_flair_text && (
                             <Flair
                                 backgroundColor={
@@ -51,9 +57,9 @@ export default function Post({
                                 text={post.author_flair_text}
                                 className="ml-2"
                             />
-                        )}{" "}
-                        <span className="text-gray-600">&bull;</span>{" "}
-                        {formatDistanceToNow(fromUnixTime(post.created))}
+                        )}
+                        <span className="text-neutral-400 mx-2">&bull;</span>
+                        {formatDistanceToNow(fromUnixTime(post.created))} ago
                     </p>
                     <div>
                         {post.total_awards_received > 0 &&

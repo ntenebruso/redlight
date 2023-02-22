@@ -110,3 +110,29 @@ export async function fetchSearchResults(query) {
     });
     return res.data;
 }
+
+export async function fetchUserInfo(username) {
+    try {
+        const res = await axios.get(REDDIT + `/user/${username}/about.json`, {
+            params,
+        });
+        return res.data;
+    } catch (error) {
+        if (error.response.status == 404) {
+            return null;
+        }
+    }
+}
+
+export async function fetchUserListings(username) {
+    try {
+        const res = await axios.get(REDDIT + `/user/${username}.json`, {
+            params,
+        });
+        return res.data;
+    } catch (error) {
+        if (error.response.status == 404) {
+            return null;
+        }
+    }
+}
