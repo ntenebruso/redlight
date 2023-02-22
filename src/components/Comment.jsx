@@ -94,7 +94,7 @@ export default function Comment({
                 <div className="flex-1 overflow-hidden">
                     <p className="flex items-center">
                         <Link
-                            href={`/u/${comment.author.toLowerCase()}`}
+                            href={`/u/${comment.author}`}
                             className="font-bold text-red-400"
                         >
                             u/{comment.author}
