@@ -16,12 +16,20 @@ export default function Post({
             {...props}
             className={`mb-4 p-4 rounded-md bg-neutral-900 hover:bg-neutral-800 border-zinc-600 border-[1px] flex ${props.className}`}
         >
-            <span className="inline-block mr-4">
-                {new Intl.NumberFormat("en-US", {
-                    notation: "compact",
-                    compactDisplay: "short",
-                }).format(post.score)}
-            </span>
+            <div>
+                <span className="block mr-4">
+                    {new Intl.NumberFormat("en-US", {
+                        notation: "compact",
+                        compactDisplay: "short",
+                    }).format(post.score)}
+                </span>
+                {post.stickied && (
+                    <RiPushpinLine className="block text-xl mr-2 text-green-500" />
+                )}
+                {post.locked && (
+                    <FiLock className="block text-xl mr-2 text-yellow-300" />
+                )}
+            </div>
             <div className="flex-1">
                 <div className="mb-3">
                     <p>

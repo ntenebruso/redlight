@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { fetchMoreReplies } from "@lib/api";
 import { formatDistanceToNowStrict, fromUnixTime } from "date-fns";
-import Image from "next/image";
+import { RiPushpinLine } from "react-icons/ri";
+import { FiLock } from "react-icons/fi";
 import Flair from "./Flair";
 import Link from "next/link";
 
@@ -93,6 +94,12 @@ export default function Comment({
                 )}
                 <div className="flex-1 overflow-hidden">
                     <p className="flex items-center">
+                        {comment.stickied && (
+                            <RiPushpinLine className="text-xl mr-2 text-green-500" />
+                        )}
+                        {comment.locked && (
+                            <FiLock className="text-xl mr-2 text-yellow-300" />
+                        )}
                         <Link
                             href={`/u/${comment.author}`}
                             className="font-bold text-red-400"
