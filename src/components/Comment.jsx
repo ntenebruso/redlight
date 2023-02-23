@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from "react";
 import { fetchMoreReplies } from "@lib/api";
 import { formatDistanceToNowStrict, fromUnixTime } from "date-fns";
-import { RiPushpinLine } from "react-icons/ri";
-import { FiLock } from "react-icons/fi";
-import Flair from "./Flair";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { FiLock } from "react-icons/fi";
+import { RiPushpinLine } from "react-icons/ri";
+import Flair from "./Flair";
 
 export default function Comment({
     comment,

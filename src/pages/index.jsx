@@ -1,10 +1,10 @@
 import { fetchFeed } from "@lib/api";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { Tab } from "@headlessui/react";
 import PostsModal from "@components/PostsModal";
 import PostsList from "@components/PostsList";
 import Spinner from "@components/Spinner";
+import FilterTabs from "@components/FilterTabs";
 
 export default function Home() {
     const [loading, setLoading] = useState(true);
@@ -12,50 +12,34 @@ export default function Home() {
     const router = useRouter();
     const { sub, id } = router.query;
 
-    const feeds = ["Best", "Hot", "New", "Top"];
-    const [currentFeed, setCurrentFeed] = useState("best");
+    const filters = ["Best", "Hot", "New", "Top"];
+    const [currentFilter, setCurrentFilter] = useState("best");
 
     useEffect(() => {
         console.log("fetching...");
-        fetchFeed(currentFeed).then((posts) => {
+        fetchFeed(currentFilter).then((posts) => {
             setPosts(posts.data.children);
             console.log("full list", posts.data.children);
             setLoading(false);
         });
-    }, [currentFeed]);
+    }, [currentFilter]);
 
     function fetchMorePosts() {
         const lastPostName = posts[posts.length - 1].data.name;
-        fetchFeed(currentFeed, lastPostName).then((newPosts) =>
+        fetchFeed(currentFilter, lastPostName).then((newPosts) =>
             setPosts([...posts, ...newPosts.data.children])
         );
     }
 
     return (
         <div className="mx-auto max-w-3xl">
-            <Tab.Group
+            <FilterTabs
+                filters={filters}
                 onChange={(index) => {
                     setLoading(true);
-                    setCurrentFeed(feeds[index].toLowerCase());
+                    setCurrentFilter(filters[index].toLowerCase());
                 }}
-            >
-                <Tab.List className="mt-4 inline-flex rounded-md bg-neutral-900 overflow-hidden">
-                    {feeds.map((feed, index) => (
-                        <Tab
-                            key={index}
-                            className={({ selected }) =>
-                                `inline-block py-2 px-3 transition-colors outline-none ${
-                                    selected
-                                        ? "bg-red-400"
-                                        : "hover:underline hover:bg-neutral-800"
-                                }`
-                            }
-                        >
-                            {feed}
-                        </Tab>
-                    ))}
-                </Tab.List>
-            </Tab.Group>
+            />
             {loading ? (
                 <Spinner />
             ) : (

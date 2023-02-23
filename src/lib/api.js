@@ -5,6 +5,7 @@ const params = {
     raw_json: 1,
 };
 import { getSession } from "next-auth/react";
+import { RiLockUnlockLine } from "react-icons/ri";
 
 async function getToken() {
     const session = await getSession();
@@ -75,6 +76,7 @@ export async function fetchFeed(feed, last) {
 
 export async function fetchPost(subreddit, id) {
     if (!subreddit || !id) return;
+
     const response = await axios.get(
         `${REDDIT}/r/${subreddit}/comments/${id}.json`,
         { params: { ...params, depth: 5 } }
@@ -134,5 +136,27 @@ export async function fetchUserListings(username) {
         if (error.response.status == 404) {
             return null;
         }
+    }
+}
+
+export async function fetchSubInfo(subreddit) {
+    try {
+        const res = await axios.get(REDDIT + `/r/${subreddit}/about.json`, {
+            params,
+        });
+        return res.data;
+    } catch (error) {
+        return null;
+    }
+}
+
+export async function fetchSubPosts(subreddit, filter) {
+    try {
+        const res = await axios.get(REDDIT + `/r/${subreddit}/${filter}.json`, {
+            params,
+        });
+        return res.data;
+    } catch (error) {
+        return null;
     }
 }

@@ -1,8 +1,9 @@
-import Link from "next/link";
 import { formatDistanceToNow, fromUnixTime } from "date-fns";
-import { FiLink } from "react-icons/fi";
-import Preview from "./Preview";
+import Link from "next/link";
+import { FiLink, FiLock } from "react-icons/fi";
+import { RiPushpinLine } from "react-icons/ri";
 import Flair from "./Flair";
+import Preview from "./Preview";
 
 export default function Post({
     post,
@@ -16,8 +17,8 @@ export default function Post({
             {...props}
             className={`mb-4 p-4 rounded-md bg-neutral-900 hover:bg-neutral-800 border-zinc-600 border-[1px] flex ${props.className}`}
         >
-            <div>
-                <span className="block mr-4">
+            <div className="flex flex-col items-center text-center pr-2">
+                <span className="block">
                     {new Intl.NumberFormat("en-US", {
                         notation: "compact",
                         compactDisplay: "short",
@@ -45,10 +46,17 @@ export default function Post({
                                 className="mr-2"
                             />
                         )}
-                        <span className="font-bold">r/{post.subreddit}</span>
+                        <span className="font-bold">
+                            <Link
+                                href={`/r/${post.subreddit}`}
+                                className="text-red-500"
+                            >
+                                r/{post.subreddit}
+                            </Link>
+                        </span>
                         <span className="text-neutral-400 mx-2">&bull;</span>
                         <Link
-                            href={`/u/${post.author.toLowerCase()}`}
+                            href={`/u/${post.author}`}
                             className="text-red-400"
                         >
                             u/
